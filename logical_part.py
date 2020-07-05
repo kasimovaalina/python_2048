@@ -61,7 +61,7 @@ class Entrails:
                 for j in range(startColumnn, endColumn, columnStep):
                     nextLine = i + dirLine[direction]
                     nextColumn = j + dirColumn[direction]
-                    if (self.gamePole[i][j] != 0 and moveIsPossible(i,j,nextLine,nextColumn)):
+                    if (self.gamePole[i][j] != 0 and self.moveIsPossible(i,j,nextLine,nextColumn)):
                         self.gamePole[nextLine][nextColumn] += self.gamePole[i][j]
                         self.gamePole[i][j] = 0
                         moveWasMade = true
@@ -84,4 +84,28 @@ class Entrails:
                     print("{ ", self.gamePole[i][j], "}  ")
             print(" ")
   print("n - new game, a - left, w - up, d - right, s - down, q - quit)
-}
+
+    def newGame(self):
+        for i in range(0, 4, 1):
+            for j in range(0, 4, 1):
+                self.gamePole[i][j] = 0
+        self.addAnotherPiece()
+        self.addAnotherPiece()
+    
+    def startGame(self):
+        char choice;
+        str commands = "sdwa";
+        bool isNotOver = true
+        while(isNotOver)
+            self.gameInterface()
+            input(choice)
+            if (choice == 'n'){
+                self.newGame();
+            else
+                int currentDirection
+                for i in range(0,4):
+                    if choice == commands[i]:
+                        currentDirection = i 
+                self.move(currentDirection)
+ "End of the game!";
+    
