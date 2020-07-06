@@ -88,17 +88,17 @@ class Entrails:
         for i in range(0, 4, 1):
             for j in range(0, 4, 1):
                 if (self.grid[i][j] == 0):
-                    print("{      }  ", end='')
+                    print("{       }  ", end='')
                 elif (self.grid[i][j] < 10):
-                    print("{    ", self.grid[i][j], "}  ", end='')
+                    print("{    ", self.grid[i][j], "} ", end=' ')
                 elif (self.grid[i][j] < 100):
-                    print("{   ", self.grid[i][j], "}  ", end='')
+                    print("{   ", self.grid[i][j], "}  ", end=' ')
                 elif (self.grid[i][j] < 1000):
-                    print("{  ", self.grid[i][j], "}  ", end='')
+                    print("{  ", self.grid[i][j], "}  ", end=' ')
                 elif (self.grid[i][j] < 10000):
-                    print("{ ", self.grid[i][j], "}  ", end='')
-            print("\n")
-        print("n - a game, a - left, w - up, d - right, s - down, q - quit")
+                    print("{ ", self.grid[i][j], "}  ", end=' ')
+            print("here is the end of the line")
+        print("n - new game, a - left, w - up, d - right, s - down, q - quit")
 
     def create_newgame(self):
         for i in range(4):
@@ -118,7 +118,10 @@ class Entrails:
                 self.create_newgame()
             else:
                 if choice in commands:
-                    self.move(direction=commands[choice])
+                    print(commands[choice])
+                    direction = commands[choice]
+                    print(direction)
+                    self.move(direction)
                 else:
                     print("Unknown command")
         print("End of the game!")
