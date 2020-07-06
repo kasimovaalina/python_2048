@@ -47,8 +47,9 @@ class Entrails:
 
     def move_is_possible(self, line: int, column: int, nextLine: int, nextColumn: int):
         if not self.cell_in_grid(nextLine, nextColumn):
-            if self.grid[line][column] != self.grid[nextLine][nextColumn] and self.grid[nextLine][nextColumn] != 0:
-                return False
+            return False
+        elif self.grid[line][column] != self.grid[nextLine][nextColumn] and self.grid[nextLine][nextColumn] != 0:
+            return False
         else:
             return True
 
@@ -75,7 +76,7 @@ class Entrails:
                 for j in range(startColumn, endColumn, columnStep):
                     nextLine = i + self.dirLine[direction]
                     nextColumn = j + self.dirColumn[direction]
-                    if (self.grid[i][j] != 0 and self.moveIsPossible(i, j, nextLine, nextColumn)):
+                    if (self.grid[i][j] != 0 and self.move_is_possible(i, j, nextLine, nextColumn)):
                         self.grid[nextLine][nextColumn] += self.grid[i][j]
                         self.grid[i][j] = 0
                         moveWasMade = True
@@ -87,16 +88,16 @@ class Entrails:
         for i in range(0, 4, 1):
             for j in range(0, 4, 1):
                 if (self.grid[i][j] == 0):
-                    print("{      }  ")
+                    print("{      }  ", end='')
                 elif (self.grid[i][j] < 10):
-                    print("{    ", self.grid[i][j], "}  ")
+                    print("{    ", self.grid[i][j], "}  ", end='')
                 elif (self.grid[i][j] < 100):
-                    print("{   ", self.grid[i][j], "}  ")
+                    print("{   ", self.grid[i][j], "}  ", end='')
                 elif (self.grid[i][j] < 1000):
-                    print("{  ", self.grid[i][j], "}  ")
+                    print("{  ", self.grid[i][j], "}  ", end='')
                 elif (self.grid[i][j] < 10000):
-                    print("{ ", self.grid[i][j], "}  ")
-            print(" ")
+                    print("{ ", self.grid[i][j], "}  ", end='')
+            print("\n")
         print("n - a game, a - left, w - up, d - right, s - down, q - quit")
 
     def create_newgame(self):
