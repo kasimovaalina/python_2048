@@ -1,14 +1,8 @@
 import random
-import Enum
 
 """
 
 """
-class Direction(Enum):
-    DOWN = 0
-    RIGHT = 1
-    UP = 2
-    LEFT = 3
 
 
 class Coordinates:
@@ -19,27 +13,27 @@ class Coordinates:
 
 
 class Entrails:
+    dirLine = [1, 0, -1, 0]
+    dirColumn = [0, 1, 0, -1]
 
     def __init__(self):
-        self.grid = [0 for i in range(4) for i in range(4)]
-        self.dirLine = [1, 0, -1, 0]
-        self.dirColumn = [0, 1, 0, -1]
+        self.grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
     def get_unnocuppied_position(self) -> Coordinates:
-        isOccupied = True
-        while isOccupied:
+        is_occupied = True
+        while is_occupied:
             x = random.randint(0, 3)
             y = random.randint(0, 3)
             if self.grid[x][y] == 0:
-                isOccupied = False
+                is_occupied = False
         return Coordinates(x, y)
 
     def add_piece(self):
-        cellForTwo: Coordinates = self.getUnoccupiedPosition()
+        free_cell: Coordinates = self.get_unnocuppied_position()
         if random.randint(0, 1000) % 3 == 0:
-            self.grid[cellForTwo.x][cellForTwo.y] = 2
+            self.grid[free_cell.x][free_cell.y] = 4
         else:
-            self.grid[cellForTwo.x][cellForTwo.y] = 4
+            self.grid[free_cell.x][free_cell.y] = 2
 
     def cell_in_grid(self, nextLine: int, nextColumn: int):
         if nextLine < 0 or nextColumn < 0 or nextLine >= 4 or nextColumn >= 4:
@@ -58,7 +52,7 @@ class Entrails:
         else:
             return True
 
-    def move(self, direction: Direction):
+    def move(self, direction):
         startLine = 0
         startColumn = 0
         endLine = 3
@@ -93,7 +87,7 @@ class Entrails:
         for i in range(0, 4, 1):
             for j in range(0, 4, 1):
                 if (self.grid[i][j] == 0):
-                    print("{     }  ")
+                    print("{      }  ")
                 elif (self.grid[i][j] < 10):
                     print("{    ", self.grid[i][j], "}  ")
                 elif (self.grid[i][j] < 100):
@@ -103,9 +97,9 @@ class Entrails:
                 elif (self.grid[i][j] < 10000):
                     print("{ ", self.grid[i][j], "}  ")
             print(" ")
-        print("n - new game, a - left, w - up, d - right, s - down, q - quit")
+        print("n - a game, a - left, w - up, d - right, s - down, q - quit")
 
-    def restart(self):
+    def create_newgame(self):
         for i in range(4):
             for j in range(4):
                 self.grid[i][j] = 0
@@ -113,13 +107,14 @@ class Entrails:
         self.add_piece()
 
     def start(self):
-        commands = {'s': Direction.DOWN, 'd': Direction.RIGHT, 'w': Direction.UP, 'a': Direction.LEFT}
-        isNotOver = True
-        while isNotOver:
-            self.gameInterface()
+        commands = {'s': 0, 'd': 1, 'w': 2, 'a': 3}
+        is_not_over = True
+        self.create_newgame()
+        while is_not_over:
+            self.show()
             choice = input()
             if choice == 'n':
-                self.newGame()
+                self.create_newgame()
             else:
                 if choice in commands:
                     self.move(direction=commands[choice])

@@ -1,8 +1,8 @@
-
+import logical_part
 
 def main():
-   print("hello, world") 
-
+    game = logical_part.Entrails()
+    game.start()
 
 if __name__ == "__main__":
     main()
