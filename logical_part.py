@@ -72,8 +72,10 @@ class Entrails:
         canAddPiece = False
         while (moveWasMade):
             moveWasMade = False
-            for i in range(startLine, endLine, lineStep):
-                for j in range(startColumn, endColumn + 1, columnStep):
+            i = startLine
+            while i >= 0 and i < 4:
+                j = startColumn
+                while j >= 0 and j < 4:
                     nextLine = i + self.dirLine[direction]
                     nextColumn = j + self.dirColumn[direction]
                     if (self.grid[i][j] != 0 and self.move_is_possible(i, j, nextLine, nextColumn)):
@@ -81,6 +83,8 @@ class Entrails:
                         self.grid[i][j] = 0
                         moveWasMade = True
                         canAddPiece = True
+                    j += columnStep
+                i += lineStep
         if canAddPiece:
             self.add_piece()
 
@@ -97,7 +101,7 @@ class Entrails:
                     print("{  ", self.grid[i][j], "}  ", end=' ')
                 elif (self.grid[i][j] < 10000):
                     print("{ ", self.grid[i][j], "}  ", end=' ')
-            print("here is the end of the line")
+            print("\n")
         print("n - new game, a - left, w - up, d - right, s - down, q - quit")
 
     def create_newgame(self):
