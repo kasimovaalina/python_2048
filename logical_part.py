@@ -73,7 +73,7 @@ class Entrails:
         while (moveWasMade):
             moveWasMade = False
             for i in range(startLine, endLine, lineStep):
-                for j in range(startColumn, endColumn, columnStep):
+                for j in range(startColumn, endColumn + 1, columnStep):
                     nextLine = i + self.dirLine[direction]
                     nextColumn = j + self.dirColumn[direction]
                     if (self.grid[i][j] != 0 and self.move_is_possible(i, j, nextLine, nextColumn)):
@@ -118,9 +118,7 @@ class Entrails:
                 self.create_newgame()
             else:
                 if choice in commands:
-                    print(commands[choice])
                     direction = commands[choice]
-                    print(direction)
                     self.move(direction)
                 else:
                     print("Unknown command")
