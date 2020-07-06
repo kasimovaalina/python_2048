@@ -5,10 +5,10 @@ import Enum
 
 """
 class Direction(Enum):
-    UP = 1
-    DOWN = 2
+    DOWN = 0
+    RIGHT = 1
+    UP = 2
     LEFT = 3
-    RIGHT = 4
 
 
 class Coordinates:
@@ -25,7 +25,7 @@ class Entrails:
         self.dirLine = [1, 0, -1, 0]
         self.dirColumn = [0, 1, 0, -1]
 
-    def get_Unnocuppied_Position(self) -> Coordinates:
+    def get_unnocuppied_position(self) -> Coordinates:
         isOccupied = True
         while isOccupied:
             x = random.randint(0, 3)
@@ -34,16 +34,27 @@ class Entrails:
                 isOccupied = False
         return Coordinates(x, y)
 
-    def addAnotherPiece(self):
+    def add_piece(self):
         cellForTwo: Coordinates = self.getUnoccupiedPosition()
         if random.randint(0, 1000) % 3 == 0:
             self.grid[cellForTwo.x][cellForTwo.y] = 2
         else:
             self.grid[cellForTwo.x][cellForTwo.y] = 4
 
-    def moveIsPossible(self, line, column, nextLine, nextColumn):
-        if nextLine < 0 or nextColumn < 0 or nextLine >= 4 or nextColumn >= 4 or grid[line][column] != grid[nextLine][nextColumn] and grid[nextLine][nextColumn] != 0:
+    def cell_in_grid(self, nextLine: int, nextColumn: int):
+        if nextLine < 0 or nextColumn < 0 or nextLine >= 4 or nextColumn >= 4:
             return False
+        return True
+
+    def same_cell(self, line: int, column: int, nextLine: int, nextColumn: int):
+        if self.grid[line][column] != self.grid[nextLine][nextColumn]:
+            return False
+        return True
+
+    def move_is_possible(self, line: int, column: int, nextLine: int, nextColumn: int):
+        if not self.cell_in_grid(nextLine, nextColumn):
+            if self.grid[line][column] != self.grid[nextLine][nextColumn] and self.grid[nextLine][nextColumn] != 0:
+                return False
         else:
             return True
 
@@ -67,18 +78,18 @@ class Entrails:
         while (moveWasMade):
             moveWasMade = False
             for i in range(startLine, endLine, lineStep):
-                for j in range(startColumnn, endColumn, columnStep):
-                    nextLine = i + dirLine[direction]
-                    nextColumn = j + dirColumn[direction]
+                for j in range(startColumn, endColumn, columnStep):
+                    nextLine = i + self.dirLine[direction]
+                    nextColumn = j + self.dirColumn[direction]
                     if (self.grid[i][j] != 0 and self.moveIsPossible(i, j, nextLine, nextColumn)):
                         self.grid[nextLine][nextColumn] += self.grid[i][j]
                         self.grid[i][j] = 0
                         moveWasMade = True
                         canAddPiece = True
         if canAddPiece:
-            addAnotherPiece()
+            self.add_piece()
 
-    def gameInterface(self):
+    def show(self):
         for i in range(0, 4, 1):
             for j in range(0, 4, 1):
                 if (self.grid[i][j] == 0):
@@ -94,18 +105,15 @@ class Entrails:
             print(" ")
         print("n - new game, a - left, w - up, d - right, s - down, q - quit")
 
-    def newGame(self):
+    def restart(self):
         for i in range(4):
             for j in range(4):
                 self.grid[i][j] = 0
-        self.addAnotherPiece()
-        self.addAnotherPiece()
+        self.add_piece()
+        self.add_piece()
 
-    def startGame(self):
-        commands = {
-            "s": Direction.DOWN
-            # ...
-        }
+    def start(self):
+        commands = {'s': Direction.DOWN, 'd': Direction.RIGHT, 'w': Direction.UP, 'a': Direction.LEFT}
         isNotOver = True
         while isNotOver:
             self.gameInterface()
