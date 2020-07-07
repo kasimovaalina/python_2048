@@ -47,22 +47,14 @@ class Externals:
                         screen.blit(nmbr_text, (new_x, new_y))
 
     def draw_background_cells(self, screen):
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40, 40, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40, 40 + 98, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40, 40 + 98 + 98, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40, 40 + 98 * 3, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98, 40, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98, 40 + 98, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98, 40 + 98 + 98, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98, 40 + 98 * 3, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98 + 98, 40, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98 + 98, 40 + 98, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98 + 98, 40 + 98 + 98, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98 + 98, 40 + 98 * 3, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98 + 98 + 98, 40, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98 + 98 + 98, 40 + 98, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98 + 98 + 98, 40 + 98 + 98, 93, 93))
-        pygame.draw.rect(screen, LIGHT_PURPLE, (40 + 98 + 98 + 98, 40 + 98 * 3, 93, 93))
+        x = 40
+        y = 40
+        step = 98
+        for i in range(4):
+            for j in range(4):
+                new_x = x + j * step
+                new_y = y + i * step
+                pygame.draw.rect(screen, LIGHT_PURPLE, (new_x, new_y, 93, 93))
 
     def draw_background(self, screen):
         instruction_font = pygame.font.SysFont('comicsansms', 18)
