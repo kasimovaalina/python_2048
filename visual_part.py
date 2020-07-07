@@ -14,8 +14,8 @@ class Externals:
         x = 40
         y = 40
         step = 98
-        for i in range(4): 
-            for j in range(4): 
+        for i in range(4):
+            for j in range(4):
                 if grid[i][j] != 0:
                     new_x = x + j * step
                     new_y = y + i * step
@@ -25,16 +25,21 @@ class Externals:
                         nmbr_font = pygame.font.SysFont('comicsansms', 48)
                         nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
                         screen.blit(nmbr_text, (new_x + 30, new_y + 10))
-                    elif grid[i][j] < 100:
+                    elif grid[i][j] < 20:
                         nmbr = " " + str(grid[i][j])
                         nmbr_font = pygame.font.SysFont('comicsansms', 48)
                         nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
                         screen.blit(nmbr_text, (new_x + 10, new_y + 10))
+                    elif grid[i][j] < 100:
+                        nmbr = str(grid[i][j])
+                        nmbr_font = pygame.font.SysFont('comicsansms', 48)
+                        nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
+                        screen.blit(nmbr_text, (new_x + 15, new_y + 10))
                     elif grid[i][j] < 1000:
                         nmbr = str(grid[i][j])
                         nmbr_font = pygame.font.SysFont('comicsansms', 43)
                         nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
-                        screen.blit(nmbr_text, (new_x, new_y))
+                        screen.blit(nmbr_text, (new_x + 10, new_y + 10))
                     elif grid[i][j] <= 2048:
                         nmbr = str(grid[i][j])
                         nmbr_font = pygame.font.SysFont('comicsansms', 40)
