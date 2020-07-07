@@ -14,17 +14,32 @@ class Externals:
         x = 40
         y = 40
         step = 98
-        for i in range(4):
-            for j in range(4):
+        for i in range(4): 
+            for j in range(4): 
                 if grid[i][j] != 0:
-                    new_x = x + i * step
-                    new_y = y + j * step
+                    new_x = x + j * step
+                    new_y = y + i * step
                     pygame.draw.rect(screen, ALMOST_WHITE, (new_x, new_y, 93, 93))
                     if grid[i][j] < 10:
                         nmbr = str(grid[i][j])
                         nmbr_font = pygame.font.SysFont('comicsansms', 48)
                         nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
                         screen.blit(nmbr_text, (new_x + 30, new_y + 10))
+                    elif grid[i][j] < 100:
+                        nmbr = " " + str(grid[i][j])
+                        nmbr_font = pygame.font.SysFont('comicsansms', 48)
+                        nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
+                        screen.blit(nmbr_text, (new_x + 10, new_y + 10))
+                    elif grid[i][j] < 1000:
+                        nmbr = str(grid[i][j])
+                        nmbr_font = pygame.font.SysFont('comicsansms', 43)
+                        nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
+                        screen.blit(nmbr_text, (new_x, new_y))
+                    elif grid[i][j] <= 2048:
+                        nmbr = str(grid[i][j])
+                        nmbr_font = pygame.font.SysFont('comicsansms', 40)
+                        nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
+                        screen.blit(nmbr_text, (new_x, new_y))
 
     def draw_background_cells(self, screen):
         pygame.draw.rect(screen, LIGHT_PURPLE, (40, 40, 93, 93))
@@ -57,10 +72,21 @@ class Externals:
 
     def start(self, screen, game: logical_part.Entrails):
         keep_going = True
+        clock = pygame.time.Clock()
         while keep_going:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    keep_going = False
             self.draw_background(screen)
             self.draw_grid(screen, game.grid)
             pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    keep_going = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN:
+                        game.move(0)
+                    elif event.key == pygame.K_RIGHT:
+                        game.move(1)
+                    elif event.key == pygame.K_UP:
+                        game.move(2)
+                    elif event.key == pygame.K_LEFT:
+                        game.move(3)
+            clock.tick(60)
