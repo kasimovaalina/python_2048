@@ -1,7 +1,10 @@
 import random
 
 """
-
+Поле игры представляет из себя двумерный массив размерностью 4x4. 
+Команды смещения блоков в одно из четырех направлений представлены в виде цифр.
+Позже, цифра, обозначающая команду передается в метод как параметр, который,
+в свою очередь, видоизменяет массив нужным образом.
 """
 
 
@@ -13,8 +16,8 @@ class Coordinates:
 
 
 class Entrails:
-    dirLine = [1, 0, -1, 0]
-    dirColumn = [0, 1, 0, -1]
+    direct_line = [1, 0, -1, 0]
+    direct_column = [0, 1, 0, -1]
 
     def __init__(self):
         self.grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
@@ -35,57 +38,53 @@ class Entrails:
         else:
             self.grid[free_cell.x][free_cell.y] = 2
 
-    def cell_in_grid(self, nextLine: int, nextColumn: int):
-        if nextLine < 0 or nextColumn < 0 or nextLine >= 4 or nextColumn >= 4:
+    def cell_in_grid(self, next_line: int, next_column: int):
+        if next_line < 0 or next_column < 0 or next_line >= 4 or next_column >= 4:
             return False
         return True
 
-    def same_cell(self, line: int, column: int, nextLine: int, nextColumn: int):
-        if self.grid[line][column] != self.grid[nextLine][nextColumn]:
+    def same_cell(self, line: int, column: int, next_line: int, next_column: int):
+        if self.grid[line][column] != self.grid[next_line][next_column]:
             return False
         return True
 
-    def move_is_possible(self, line: int, column: int, nextLine: int, nextColumn: int):
-        if not self.cell_in_grid(nextLine, nextColumn):
+    def move_is_possible(self, line: int, column: int, next_line: int, next_column: int):
+        if not self.cell_in_grid(next_line, next_column):
             return False
-        elif self.grid[line][column] != self.grid[nextLine][nextColumn] and self.grid[nextLine][nextColumn] != 0:
+        elif self.grid[line][column] != self.grid[next_line][next_column] and self.grid[next_line][next_column] != 0:
             return False
         else:
             return True
 
     def move(self, direction):
-        startLine = 0
-        startColumn = 0
-        endLine = 3
-        endColumn = 3
-        lineStep = 1
-        columnStep = 1
+        start_line = 0
+        start_column = 0
+        line_step = 1
+        column_step = 1
         if (direction == 0):
-            startLine = 3
-            endLine = 0
-            lineStep = -1
+            start_line = 3
+            line_step = -1
         if (direction == 1):
-            startColumn = 3
-            endLine = 0
-            columnStep = -1
-        moveWasMade = True
-        canAddPiece = False
-        while (moveWasMade):
-            moveWasMade = False
-            i = startLine
+            start_column = 3
+            column_step = -1
+        move_was_made = True
+        can_add_piece = False
+        while (move_was_made):
+            move_was_made = False
+            i = start_line
             while i >= 0 and i < 4:
-                j = startColumn
+                j = start_column
                 while j >= 0 and j < 4:
-                    nextLine = i + self.dirLine[direction]
-                    nextColumn = j + self.dirColumn[direction]
-                    if (self.grid[i][j] != 0 and self.move_is_possible(i, j, nextLine, nextColumn)):
-                        self.grid[nextLine][nextColumn] += self.grid[i][j]
+                    next_line = i + self.direct_line[direction]
+                    next_column = j + self.direct_column[direction]
+                    if (self.grid[i][j] != 0 and self.move_is_possible(i, j, next_line, next_column)):
+                        self.grid[next_line][next_column] += self.grid[i][j]
                         self.grid[i][j] = 0
-                        moveWasMade = True
-                        canAddPiece = True
-                    j += columnStep
-                i += lineStep
-        if canAddPiece:
+                        move_was_made = True
+                        can_add_piece = True
+                    j += column_step
+                i += line_step
+        if can_add_piece:
             self.add_piece()
 
     def show(self):
