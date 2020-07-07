@@ -6,7 +6,7 @@ LIGHT_PURPLE = (117, 82, 126)
 GREEN = (0, 225, 0)
 class Externals:
     BACK_COLOR = (104, 47, 90)
-    instruction1 = "Use WASD to move the tiles."
+    instruction1 = "Use  arrow keys to move the tiles."
     instruction2 = "When two tiles with the same number touch, "
     instruction3 = "they merge into one!"
 
