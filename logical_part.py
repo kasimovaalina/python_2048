@@ -1,12 +1,15 @@
 import random
+import enum
 
 """
 Поле игры представляет из себя двумерный массив размерностью 4x4.
-Команды смещения блоков в одно из четырех направлений представлены в виде цифр.
-Позже, цифра, обозначающая команду передается в метод как параметр, который,
-в свою очередь, видоизменяет массив нужным образом.
+Массив видоизменяется каждый раз, когда программа обращается к методу move в соответсвии
 """
-
+class Direction(enum.Enum):
+    DOWN = 0
+    RIGHT = 1
+    UP = 2
+    LEFT = 3
 
 class Coordinates:
 
@@ -107,22 +110,7 @@ class Entrails:
         for i in range(4):
             for j in range(4):
                 self.grid[i][j] = 0
+        self.grid[2][2] = 2048
+        self.grid[2][3] = 2048
         self.add_piece()
         self.add_piece()
-
-    def start(self):
-        commands = {'s': 0, 'd': 1, 'w': 2, 'a': 3}
-        is_not_over = True
-        self.create_newgame()
-        while is_not_over:
-            self.show()
-            choice = input()
-            if choice == 'n':
-                self.create_newgame()
-            else:
-                if choice in commands:
-                    direction = commands[choice]
-                    self.move(direction)
-                else:
-                    print("Unknown command")
-        print("End of the game!")

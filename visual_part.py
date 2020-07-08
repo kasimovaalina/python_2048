@@ -4,6 +4,7 @@ import pygame
 ALMOST_WHITE = (216, 201, 220)
 LIGHT_PURPLE = (117, 82, 126)
 GREEN = (0, 225, 0)
+
 class Externals:
     BACK_COLOR = (104, 47, 90)
     instruction1 = "Use  arrow keys to move the tiles."
@@ -40,11 +41,11 @@ class Externals:
                         nmbr_font = pygame.font.SysFont('comicsansms', 43)
                         nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
                         screen.blit(nmbr_text, (new_x + 10, new_y + 10))
-                    elif grid[i][j] <= 2048:
+                    elif grid[i][j] < 10000:
                         nmbr = str(grid[i][j])
-                        nmbr_font = pygame.font.SysFont('comicsansms', 40)
+                        nmbr_font = pygame.font.SysFont('comicsansms', 37)
                         nmbr_text = nmbr_font.render(nmbr, 1, self.BACK_COLOR)
-                        screen.blit(nmbr_text, (new_x, new_y))
+                        screen.blit(nmbr_text, (new_x, new_y + 20))
 
     def draw_background_cells(self, screen):
         x = 40
@@ -79,11 +80,11 @@ class Externals:
                     keep_going = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:
-                        game.move(0)
+                        game.move(logical_part.Direction.DOWN.value)
                     elif event.key == pygame.K_RIGHT:
-                        game.move(1)
+                        game.move(logical_part.Direction.RIGHT.value)
                     elif event.key == pygame.K_UP:
-                        game.move(2)
+                        game.move(logical_part.Direction.UP.value)
                     elif event.key == pygame.K_LEFT:
-                        game.move(3)
+                        game.move(logical_part.Direction.LEFT.value)
             clock.tick(60)
