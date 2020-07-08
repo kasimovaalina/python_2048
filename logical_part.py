@@ -110,7 +110,5 @@ class Entrails:
         for i in range(4):
             for j in range(4):
                 self.grid[i][j] = 0
-        self.grid[2][2] = 2048
-        self.grid[2][3] = 2048
         self.add_piece()
         self.add_piece()
