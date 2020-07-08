@@ -41,18 +41,18 @@ class Entrails:
         else:
             self.grid[free_cell.x][free_cell.y] = 2
 
-    def cell_in_grid(self, next_line: int, next_column: int):
+    def is_cell_in_grid(self, next_line: int, next_column: int):
         if next_line < 0 or next_column < 0 or next_line >= 4 or next_column >= 4:
             return False
         return True
 
-    def same_cell(self, line: int, column: int, next_line: int, next_column: int):
+    def is_same_cell(self, line: int, column: int, next_line: int, next_column: int):
         if self.grid[line][column] != self.grid[next_line][next_column]:
             return False
         return True
 
-    def move_is_possible(self, line: int, column: int, next_line: int, next_column: int):
-        if not self.cell_in_grid(next_line, next_column):
+    def is_move_possible(self, line: int, column: int, next_line: int, next_column: int):
+        if not self.is_cell_in_grid(next_line, next_column):
             return False
         elif self.grid[line][column] != self.grid[next_line][next_column] and self.grid[next_line][next_column] != 0:
             return False
@@ -80,7 +80,7 @@ class Entrails:
                 while j >= 0 and j < 4:
                     next_line = i + self.direct_line[direction]
                     next_column = j + self.direct_column[direction]
-                    if (self.grid[i][j] != 0 and self.move_is_possible(i, j, next_line, next_column)):
+                    if (self.grid[i][j] != 0 and self.is_move_possible(i, j, next_line, next_column)):
                         self.grid[next_line][next_column] += self.grid[i][j]
                         self.grid[i][j] = 0
                         move_was_made = True
