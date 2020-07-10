@@ -17,6 +17,10 @@ class Externals:
     instruction3 = "they merge into one!"
     instruction4 = "Press N to start new game anytime."
 
+    def draw_congrats(self, screen):
+        congrats_pic = pygame.image.load("winner_congrats.bmp")
+        screen.blit(congrats_pic, (0, 0))
+
     def draw_grid(self, screen, grid):
         for i in range(4):
             for j in range(4):
@@ -73,10 +77,11 @@ class Externals:
     def start(self, screen, game: logical_part.Entrails):
         keep_going = True
         clock = pygame.time.Clock()
+        play_after_2048 = False
         while keep_going:
+            reached_2048 = game.is_2048_in_grid()
             self.draw_background(screen)
             self.draw_grid(screen, game.grid)
-            pygame.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     keep_going = False
@@ -91,4 +96,15 @@ class Externals:
                         game.move(logical_part.Direction.LEFT)
                     elif event.key == pygame.K_n:
                         game.create_newgame()
+            if reached_2048 and not play_after_2048:
+                self.draw_congrats(screen)
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        keep_going = False
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_n:
+                            game.create_newgame()
+                        elif event.key == pygame.K_c:
+                            play_after_2048 = True
+            pygame.display.update()
             clock.tick(60)
