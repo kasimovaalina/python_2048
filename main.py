@@ -6,6 +6,7 @@ def main():
     game = logical_part.Entrails()
     game.create_newgame()
     pygame.init()
+    pygame.display.set_caption('2048')
     screen = pygame.display.set_mode([470, 600])
     game_visual = visual_part.Externals()
     game_visual.start(screen, game)

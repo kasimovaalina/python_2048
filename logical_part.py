@@ -48,6 +48,9 @@ class Entrails:
         else:
             self.grid[free_cell.x][free_cell.y] = 2
 
+    def is_grid_full(self):
+        pass
+
     def is_cell_in_grid(self, next_line: int, next_column: int):
         if next_line >= 0 and next_column >= 0 and next_line < 4 and next_column < 4:
             return True
