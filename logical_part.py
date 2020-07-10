@@ -59,6 +59,13 @@ class Entrails:
         else:
             return True
 
+    def is_2048_in_grid(self):
+        for i in range(4):
+            for j in range(4):
+                if self.grid[i][j] == 2048:
+                    return True
+        return False
+
     def move(self, direction):
         start_line = 0
         start_column = 0

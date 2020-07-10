@@ -10,6 +10,7 @@ class Externals:
     instruction1 = "Use  arrow keys to move the tiles."
     instruction2 = "When two tiles with the same number touch, "
     instruction3 = "they merge into one!"
+    instruction4 = "Press N to start new game anytime."
 
     def draw_grid(self, screen, grid):
         x = 40
@@ -64,9 +65,11 @@ class Externals:
         instruction_text1 = instruction_font.render(self.instruction1, 1, ALMOST_WHITE)
         instruction_text2 = instruction_font.render(self.instruction2, 1, ALMOST_WHITE)
         instruction_text3 = instruction_font.render(self.instruction3, 1, ALMOST_WHITE)
+        instruction_text4 = instruction_font.render(self.instruction4, 1, ALMOST_WHITE)
         screen.blit(instruction_text1, (39, 478))
         screen.blit(instruction_text2, (39, 501))
         screen.blit(instruction_text3, (39, 524))
+        screen.blit(instruction_text4, (39, 547))
 
     def start(self, screen, game: logical_part.Entrails):
         keep_going = True
@@ -87,4 +90,6 @@ class Externals:
                         game.move(logical_part.Direction.UP.value)
                     elif event.key == pygame.K_LEFT:
                         game.move(logical_part.Direction.LEFT.value)
+                    elif event.key == pygame.K_n:
+                        game.create_newgame()
             clock.tick(60)
