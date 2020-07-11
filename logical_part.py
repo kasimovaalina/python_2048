@@ -43,13 +43,10 @@ class Entrails:
 
     def add_piece(self):
         free_cell: Coordinates = self.get_unnocuppied_position()
-        if random.randint(0, 1000) % 3 == 0:
+        if random.randint(0, 1000) % 53 == 0:
             self.grid[free_cell.x][free_cell.y] = 4
         else:
             self.grid[free_cell.x][free_cell.y] = 2
-
-    def is_grid_full(self):
-        pass
 
     def is_cell_in_grid(self, next_line: int, next_column: int):
         if next_line >= 0 and next_column >= 0 and next_line < 4 and next_column < 4:
