@@ -8,7 +8,8 @@ BACK_COLOR = (104, 47, 90)
 # начальные координаты для отрисовки плиток
 x = 40
 y = 40
-step = 98 #ширина одной плитки вместе с отступом
+# ширина одной плитки вместе с отступом
+step = 98
 
 class Pygame_helper:
     instruction1 = "Use  arrow keys to move the tiles."
@@ -82,7 +83,7 @@ class Pygame_helper:
         keep_going = True
         clock = pygame.time.Clock()
         play_after_2048 = False
-        while keep_going: 
+        while keep_going:
             reached_2048 = game.is_2048_in_grid()
             self.draw_background(screen)
             self.draw_grid(screen, game.grid)
