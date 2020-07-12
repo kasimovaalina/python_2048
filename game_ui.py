@@ -1,10 +1,9 @@
-import logical_part
+import game_logic
 import pygame
 
 # используемые цвета
 ALMOST_WHITE = (216, 201, 220)
 LIGHT_PURPLE = (117, 82, 126)
-GREEN = (0, 225, 0)
 BACK_COLOR = (104, 47, 90)
 # начальные координаты для отрисовки плиток
 x = 40
@@ -74,7 +73,7 @@ class Externals:
         screen.blit(instruction_text3, (39, 524))
         screen.blit(instruction_text4, (39, 547))
 
-    def start(self, screen, game: logical_part.Entrails):
+    def start(self, screen, game: game_logic.Entrails):
         keep_going = True
         clock = pygame.time.Clock()
         play_after_2048 = False
@@ -87,13 +86,13 @@ class Externals:
                     keep_going = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:
-                        game.move(logical_part.Direction.DOWN)
+                        game.move(game_logic.Direction.DOWN)
                     elif event.key == pygame.K_RIGHT:
-                        game.move(logical_part.Direction.RIGHT)
+                        game.move(game_logic.Direction.RIGHT)
                     elif event.key == pygame.K_UP:
-                        game.move(logical_part.Direction.UP)
+                        game.move(game_logic.Direction.UP)
                     elif event.key == pygame.K_LEFT:
-                        game.move(logical_part.Direction.LEFT)
+                        game.move(game_logic.Direction.LEFT)
                     elif event.key == pygame.K_n:
                         game.create_newgame()
             if reached_2048 and not play_after_2048:
