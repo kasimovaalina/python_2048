@@ -45,6 +45,20 @@ class Game_core:
     def __init__(self):
         self.grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
+    def is_grid_changed(self, copy_grid):
+        for i in range(4):
+            for j in range(4):
+                if copy_grid[i][j] != self.grid[i][j]:
+                    return True
+        return False
+
+    def make_grid_copy(self):
+        copy_grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+        for i in range(4):
+            for j in range(4):
+                copy_grid[i][j] = self.grid[i][j]
+        return copy_grid
+
     def get_unnocuppied_position(self) -> Coordinates:
         is_occupied = True
         while is_occupied:
@@ -121,6 +135,6 @@ class Game_core:
     def create_newgame(self):
         for i in range(4):
             for j in range(4):
-                self.grid[i][j] = 0
+                self.grid[i][j] = i * j
         self.add_piece()
         self.add_piece()

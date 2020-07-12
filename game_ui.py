@@ -22,6 +22,10 @@ class Pygame_helper:
         congrats_pic = pygame.image.load("winner_congrats.bmp")
         screen.blit(congrats_pic, (0, 0))
 
+    def draw_gameover(self, screen):
+        gameover_pic = pygame.image.load("game_over.bmp")
+        screen.blit(gameover_pic, (0, 0))
+
     # метод отрисовки массива/плиток
     def draw_grid(self, screen, grid):
         for i in range(4):
@@ -83,6 +87,10 @@ class Pygame_helper:
         keep_going = True
         clock = pygame.time.Clock()
         play_after_2048 = False
+        changed_DOWN = True
+        changed_RIGHT = True
+        changed_UP = True
+        changed_LEFT = True
         while keep_going:
             reached_2048 = game.is_2048_in_grid()
             self.draw_background(screen)
@@ -93,15 +101,38 @@ class Pygame_helper:
                     keep_going = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:
+                        grid_copy = game.make_grid_copy()
                         game.move_tiles(game_logic.Direction.DOWN)
+                        changed_DOWN = game.is_grid_changed(grid_copy)
                     elif event.key == pygame.K_RIGHT:
+                        grid_copy = game.make_grid_copy()
                         game.move_tiles(game_logic.Direction.RIGHT)
+                        changed_RIGHT = game.is_grid_changed(grid_copy)
                     elif event.key == pygame.K_UP:
+                        grid_copy = game.make_grid_copy()
                         game.move_tiles(game_logic.Direction.UP)
+                        changed_UP = game.is_grid_changed(grid_copy)
                     elif event.key == pygame.K_LEFT:
+                        grid_copy = game.make_grid_copy()
                         game.move_tiles(game_logic.Direction.LEFT)
+                        changed_LEFT = game.is_grid_changed(grid_copy)
                     elif event.key == pygame.K_n:
                         game.create_newgame()
+            # если пользователь попытался сдвинуть плитки во все четрые стороны,
+            # но ничего не изменилось,
+            # значит доска полная и ходов больше не осталось
+            if (not changed_DOWN and not changed_LEFT and not changed_RIGHT and not changed_UP):
+                self.draw_gameover(screen)
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        keep_going = False
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_n:
+                            game.create_newgame()
+                            changed_DOWN = True
+                            changed_RIGHT = True
+                            changed_UP = True
+                            changed_LEFT = True
             # если пользователь получил в процессе игры 2048,
             # будет отрисовано окно с поздравлением
             # программа так же будет ожидать событие с клавиатуры, на тот
