@@ -16,6 +16,7 @@ class Pygame_helper:
     instruction2 = "When two tiles with the same number touch, "
     instruction3 = "they merge into one!"
     instruction4 = "Press N to start new game anytime."
+    score_str = "Score: "
 
     # метод отрисовки окна, информирующее пользователя о выигрыше, содержит в себе дальнейшие инструкции
     def draw_congrats(self, screen):
@@ -69,18 +70,23 @@ class Pygame_helper:
                 pygame.draw.rect(screen, LIGHT_PURPLE, (new_x, new_y, 93, 93))
 
     # метод фона с текстовыми инструкциями
-    def draw_background(self, screen):
+    def draw_background(self, screen, score):
         instruction_font = pygame.font.SysFont('comicsansms', 18)
+        score_font = pygame.font.SysFont('comicsansms', 22)
         pygame.draw.rect(screen, BACK_COLOR, (0, 0, 470, 600))
         self.draw_background_cells(screen)
         instruction_text1 = instruction_font.render(self.instruction1, 1, ALMOST_WHITE)
         instruction_text2 = instruction_font.render(self.instruction2, 1, ALMOST_WHITE)
         instruction_text3 = instruction_font.render(self.instruction3, 1, ALMOST_WHITE)
         instruction_text4 = instruction_font.render(self.instruction4, 1, ALMOST_WHITE)
-        screen.blit(instruction_text1, (39, 478))
-        screen.blit(instruction_text2, (39, 501))
-        screen.blit(instruction_text3, (39, 524))
-        screen.blit(instruction_text4, (39, 547))
+        score_text = score_font.render(self.score_str, 1, ALMOST_WHITE)
+        points_text = score_font.render(str(score), 1, ALMOST_WHITE)
+        screen.blit(score_text, (39, 445))
+        screen.blit(points_text, (139, 445))
+        screen.blit(instruction_text1, (39, 488))
+        screen.blit(instruction_text2, (39, 511))
+        screen.blit(instruction_text3, (39, 534))
+        screen.blit(instruction_text4, (39, 557))
 
     # главная функция, содержащая в себе игровой цикл
     def start(self, screen, game: game_logic.Game_core):
@@ -93,7 +99,7 @@ class Pygame_helper:
         changed_LEFT = True
         while keep_going:
             reached_2048 = game.is_2048_in_grid()
-            self.draw_background(screen)
+            self.draw_background(screen, game.score)
             self.draw_grid(screen, game.grid)
             # цикл обработки нажатий
             for event in pygame.event.get():

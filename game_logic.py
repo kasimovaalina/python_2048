@@ -31,6 +31,7 @@ class Coordinates:
 class Game_core:
     def __init__(self):
         self.grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+        score = 0
 
     def is_grid_changed(self, copy_grid):
         for i in range(4):
@@ -79,6 +80,7 @@ class Game_core:
             for j in range(3):
                 if self.grid[i][j] == self.grid[i][j + 1] and self.grid[i][j] != 0:
                     self.grid[i][j] *= 2
+                    self.score += self.grid[i][j]
                     self.grid[i].pop(j + 1)
                     self.grid[i].append(0)
 
@@ -92,6 +94,7 @@ class Game_core:
             for j in range(3, 0, -1):
                 if self.grid[i][j] == self.grid[i][j - 1] and self.grid[i][j] != 0:
                     self.grid[i][j] *= 2
+                    self.score += self.grid[i][j]
                     self.grid[i].pop(j - 1)
                     self.grid[i].insert(0, 0)
                     can_add_piece = True
@@ -121,3 +124,4 @@ class Game_core:
                 self.grid[i][j] = 0
         self.add_piece()
         self.add_piece()
+        self.score = 0
