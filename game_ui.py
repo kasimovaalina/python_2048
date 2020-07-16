@@ -102,20 +102,28 @@ class Pygame_helper:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:
                         grid_copy = game.make_grid_copy()
-                        game.move_tiles(game_logic.Direction.DOWN)
+                        game.move_down()
                         changed_DOWN = game.is_grid_changed(grid_copy)
+                        if changed_DOWN:
+                            game.add_piece()
                     elif event.key == pygame.K_RIGHT:
                         grid_copy = game.make_grid_copy()
-                        game.move_tiles(game_logic.Direction.RIGHT)
+                        game.move_right()
                         changed_RIGHT = game.is_grid_changed(grid_copy)
+                        if changed_RIGHT:
+                            game.add_piece()
                     elif event.key == pygame.K_UP:
                         grid_copy = game.make_grid_copy()
-                        game.move_tiles(game_logic.Direction.UP)
+                        game.move_up()
                         changed_UP = game.is_grid_changed(grid_copy)
+                        if changed_UP:
+                            game.add_piece()
                     elif event.key == pygame.K_LEFT:
                         grid_copy = game.make_grid_copy()
-                        game.move_tiles(game_logic.Direction.LEFT)
+                        game.move_left()
                         changed_LEFT = game.is_grid_changed(grid_copy)
+                        if changed_LEFT:
+                            game.add_piece()
                     elif event.key == pygame.K_n:
                         game.create_newgame()
             # если пользователь попытался сдвинуть плитки во все четрые стороны,
